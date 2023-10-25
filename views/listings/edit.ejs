@@ -7,14 +7,20 @@
     <br>
 
   <h2>Edit your Listing</h2>
-  <form method="post"action="/listings/<%= listing._id %>?_method=PUT" >
+  <form
+   method="post"
+   action="/listings/<%= listing._id %>?_method=PUT"
+   novalidate
+   class="needs-validation" >
 
     <div>
       <label for="title" class="form-lable">Title</label>
       <input type="text"
        name="listing[title]"
        value="<%= listing.title %>"
-       class="form-control">
+       class="form-control"
+       required>
+       <div class="valid-feedback">Title looks good!</div>
     </div>
     
   <br>
@@ -23,9 +29,11 @@
       <label for="description" class="form-lable">Description</label>
       <textarea name="listing[description]"
        cols="10" rows="5"
-       class="form-control">
+       class="form-control"
+       required>
        <%= listing.description %>
       </textarea>
+      <div class="invalid-feedback">Enter a short description</div>
     </div>
 
   <br>  
@@ -35,7 +43,9 @@
       <input type="text"
        name="listing[image]"
        value="<%= listing.image %>"
-       class="form-control">
+       class="form-control"
+       required>
+       <div class="invalid-feedback">Enter a valid link for image</div>
     </div>
     
   <br>
@@ -47,7 +57,9 @@
       <input type="number"
        name="listing[price]"
        value="<%= listing.price %>"
-       class="form-control" >
+       class="form-control" 
+       required>
+       <div class="invalid-feedback">Price should be valid</div>
     </div>
     
   <br>
@@ -57,7 +69,9 @@
       <input type="text"
        value="<%= listing.country %>"
        name="listing[country]"
-       class="form-control">
+       class="form-control"
+       required>
+       <div class="invalid-feedback">Country name should be valid</div>
     </div>
 
   </div>
@@ -69,7 +83,9 @@
       <input type="text"
        value="<%= listing.location %>"
        name="listing[location]"
-       class="form-control">    
+       class="form-control"
+       required>  
+       <div class="invalid-feedback">Location should be valid</div>  
     </div>
     
   <br>
@@ -81,4 +97,5 @@
 
   </div>
   </div>  
+  <script src="/js/script.js"></script>
 

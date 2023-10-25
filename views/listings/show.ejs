@@ -17,15 +17,13 @@
     <br>
     <p class="card-text"> <b><%= listing.title  %></b></p>
     <ul>
-      <%= listing.title  %>
-      <br>
       <%= listing.description  %>
       <br>
-       &#8377;<%= listing.price  %>
+       <b>&#8377;<%= listing.price  %></b> 
        <br>
-      <%= listing.location  %>
+       <b> <%= listing.location  %></b>
       <br>
-      <%= listing.country  %>
+       <b> <%= listing.country  %></b>
     </ul>
   </div>
 
@@ -33,7 +31,7 @@
   <a
    href="/listings/<%= listing._id %>/edit"
    class="btn add-btn">
-   Edit this Listing</a>
+   Edit Listing</a>
 
 
   <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
