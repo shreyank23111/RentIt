@@ -5,17 +5,17 @@
 <div class="row">
   <div class="col-8 offset-3">
 
-  <h2>Listing Details: </h2>
+  <h2><%= listing.title  %> </h2>
 </div>  
 
-  <div class="card col-6 offset-3 show-card">
+  <div class="card col-6 offset-3 show-card listing-card">
     <img src="<%= listing.image %>"
      class="card-img-top show-img"
      alt="Listing Image">
 
   <div class="card-body">
     <br>
-    <p class="card-text"> <b><%= listing.title  %></b></p>
+    <p class="card-text"> <b></b></p>
     <ul>
       <%= listing.description  %>
       <br>
@@ -37,6 +37,54 @@
   <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
     <button class="btn btn-dark">Delete Listing</button>
   </form>
+</div>
+
+<div class="col-13">
+  <br>
+  <hr>
+  <h3>Leave a Review</h3>
+  <form action="/listings/<%= listing.id %>/reviews" method="post"  novalidate class="needs-validation">
+    <div class="mb-3 mt-3">
+      <label for="comment" class="form-label">Comments</label>
+      <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" >
+    </div>
+    <div class="mb-3 mt-3">
+      <label for="comment" class="form-lable">Comments</label>
+      <textarea
+       name="review[comment]"
+       id="comment"
+       cols="5" 
+       rows="5"
+       class="form-control"
+       required>
+      </textarea>
+      <div class="invalid-feedback">Please submit some comment</div>
+    </div>
+    <br>
+    <button class="btn add-btn">Submit</button>
+  </form>
+  <hr>
+  <p><b>Al
+    l Reviews</b></p>
+
+  <div class="row">
+
+  <% for(review of listing.reviews) { %>
+    <div class="card col-5 ms-5 mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Jonny Sins</h5>
+        <p class="card-text"><%= review.comment %></p>
+        <p class="card-text"> <b><%= review.rating %> stars</b></p>
+        <br>
+      </div>
+      <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+        method="post"
+       class="mb-2">
+        <button class="btn add-btn btn-sm">Delete</button>
+      </form>
+    </div>
+    <% } %>
+  </div>
 </div>
 </div>
 
