@@ -8,8 +8,12 @@ const ExpressError = require("./utils/ExpressError.js");
 const { log } = require("console");
 const session =require("express-session")
 const flash =require("connect-flash");
-const listings = require("./routes/listing.js") ;
-const reviews = require("./routes/review.js");
+const passport =require("passport");
+const LocalStrategy = require("passport-local")
+const User = require("./models/user.js");
+const userRouter = require("./routes/user.js")
+const listingsRouter = require("./routes/listing.js") ;
+const reviewsRouter = require("./routes/review.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -47,9 +51,17 @@ app.get("/", (req, res)=>{
   res.send("I am Groot");
 })
 
-
+//Session and Flash middlewares
 app.use(session(sessionOptions));
 app.use(flash());
+
+//Using Passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next)=>{
   res.locals.success = req.flash("success");
@@ -57,9 +69,20 @@ app.use((req, res, next)=>{
   next();
 })
 
+app.get("/demouser", async(req, res)=>{
+  let fakeUser = new User({
+    email: "randirani@gmail.com",
+    username: "randio-ki-rani"
+  });
+
+  let registerUser = await User.register(fakeUser, "helloFuckers")
+  res.send(registerUser)
+})
+
 //Accessing routes
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/", userRouter);
 
 
 //Page not found Route
