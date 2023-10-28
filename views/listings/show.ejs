@@ -17,6 +17,9 @@
     <br>
     <p class="card-text"> <b></b></p>
     <ul>
+     Owned by: <i><b><%= listing.owner.username %></b></i>
+      <br>
+      <br>
       <%= listing.description  %>
       <br>
        <b>&#8377;<%= listing.price  %></b> 
@@ -26,6 +29,8 @@
        <b> <%= listing.country  %></b>
     </ul>
   </div>
+
+  <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
 
 <div class="btns">
   <a
@@ -39,9 +44,13 @@
   </form>
 </div>
 
+<% } %>
+
+
 <div class="col-13">
   <br>
   <hr>
+  <% if(currUser)  { %>
   <h3>Leave a Review</h3>
   <form action="/listings/<%= listing.id %>/reviews" method="post"  novalidate class="needs-validation">
     <div class="mb-3 mt-3">
@@ -63,6 +72,8 @@
     <br>
     <button class="btn add-btn">Submit</button>
   </form>
+
+  <% } %>
   <hr>
   <p><b>Al
     l Reviews</b></p>
